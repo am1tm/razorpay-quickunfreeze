@@ -131,7 +131,7 @@
 | Choosing the problem | Four solution briefs, scored out of 10: QuickUnfreeze 8.9, Paisa Aaya 7.3, Settlement explained 7.2, Chargeback 7.0 | Chose #1: clear a settlement hold |
 | Design | Forcing questions, premise challenges, a wireframe, and a subagent second opinion | Ice visual plus a mock Razorpay app (web and APK); re-KYC as the main flow; AI in only two moments; Gemini for the photo check; Sarvam for voice; accepted the challenge that made the main flow *prevention* |
 | Engineering review | 10 architecture decisions, each with a recommendation | Decided all 10; overrode 3 |
-| Build | ~2,900 lines: the Flutter app (14 files), the API function, 9 tests (4 API, 5 app). Android toolchain set up without admin rights; Vercel deploy; installed on my Pixel | Tested on my phone; supplied keys via Vercel; chose Flash-Lite and raised the voice time budget after live measurements |
+| Build | ~5,100 lines: the Flutter app (17 files), the API function, 9 tests (4 API, 5 app). Android toolchain set up without admin rights; Vercel deploy; installed on my Pixel | Tested on my phone; supplied keys via Vercel; chose Flash-Lite and raised the voice time budget after live measurements |
 | Look and feel, docs | Restyled to match my recordings of the real app; wrote the brief, note and video script; designed the logo | Recorded the reference videos; rejected the copy; set the persona rule; kept Razorpay's logo and my real account data out |
 | Review | Two independent judge runs | Asked for them; chose which findings to act on |
 
