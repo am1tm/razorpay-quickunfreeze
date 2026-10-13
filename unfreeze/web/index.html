@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="QuickUnfreeze: stop a settlement hold from your phone. Concept prototype for the Razorpay x ISB Build Challenge.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="QuickUnfreeze">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>QuickUnfreeze · concept prototype</title>
+  <link rel="manifest" href="manifest.json">
+  <!-- Google Analytics 4 (G-9LW1SVXX76). Every hit carries surface = web_mobile | web_desktop,
+       matching the Android app's android_app (sent via /api?mode=event). -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9LW1SVXX76"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.qfSurface = function () {
+      var phone = window.matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820;
+      return phone ? 'web_mobile' : 'web_desktop';
+    };
+    window.qfTrack = function (name, json) {
+      try { gtag('event', name, JSON.parse(json)); } catch (e) {}
+    };
+    gtag('js', new Date());
+    gtag('set', 'user_properties', { surface: window.qfSurface() });
+    gtag('config', 'G-9LW1SVXX76', { surface: window.qfSurface() });
+  </script>
+  <style>
+    /* Loading splash shown until Flutter's first frame (otherwise 2-4 s of blank page). */
+    html, body { margin: 0; height: 100%; background: #F5F7FB; }
+    #splash {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0B1C3D;
+      transition: opacity .35s ease;
+    }
+    #splash .ice {
+      width: 180px; height: 110px; border-radius: 22px;
+      background: linear-gradient(135deg, #F2FBFF 0%, #C8ECFB 55%, #9FD8F2 100%);
+      border: 2px solid #fff; box-shadow: 0 18px 40px rgba(91,184,230,.35), inset 0 0 24px rgba(255,255,255,.8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; color: #3A6E8F; text-shadow: 0 0 10px #fff;
+      position: relative; overflow: hidden;
+    }
+    #splash .ice::after {
+      content: ""; position: absolute; top: -40%; left: -60%; width: 40%; height: 180%;
+      background: rgba(255,255,255,.45); transform: rotate(18deg);
+      animation: shine 1.8s ease-in-out infinite;
+    }
+    @keyframes shine { from { left: -60%; } to { left: 130%; } }
+    #splash .name { font-size: 20px; font-weight: 700; }
+    #splash .sub { font-size: 12px; color: #6B7690; }
+    #splash.hide { opacity: 0; pointer-events: none; }
+    /* Desktop: match the dark showcase stage. */
+    @media (min-width: 600px) {
+      html, body { background: #070C1C; }
+      #splash { color: #FFFFFF; background: radial-gradient(circle at 60% 40%, #13234A, #070C1C 70%); }
+      #splash .sub { color: rgba(255,255,255,.6); }
+    }
+  </style>
+</head>
+<body>
+  <div id="splash">
+    <img src="icons/Icon-192.png" width="96" height="96" alt="">
+    <div class="name">QuickUnfreeze</div>
+    <div class="sub">Concept prototype · loading…</div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var s = document.getElementById('splash');
+      if (!s) return;
+      s.classList.add('hide');
+      setTimeout(function () { s.remove(); }, 400);
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

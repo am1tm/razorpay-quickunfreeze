@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Unfreeze wireframe</title>
+<style>
+  /* Intentionally rough: system font, grey borders, no brand color. */
+  body{font-family:-apple-system,system-ui,sans-serif;background:#f4f4f4;margin:0;padding:24px;color:#222}
+  h1{font-size:16px;font-weight:600;margin:0 0 16px}
+  .row{display:flex;gap:28px;align-items:flex-start}
+  .phone{width:300px;height:620px;border:2px solid #555;border-radius:28px;background:#fff;position:relative;overflow:hidden;padding:14px;box-sizing:border-box}
+  .cap{font-size:12px;color:#666;margin:8px 0 0;width:300px}
+  .top{font-size:12px;color:#555;display:flex;justify-content:space-between}
+  .hi{font-size:15px;font-weight:600;margin:8px 0 2px}
+  .sub{font-size:11px;color:#777;margin-bottom:10px}
+  .card{border:1.5px solid #999;border-radius:12px;padding:10px;margin-bottom:10px}
+  .ice{height:120px;border:2px dashed #888;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;position:relative;background:repeating-linear-gradient(45deg,#eee 0 6px,#fafafa 6px 12px)}
+  .ice small{position:absolute;bottom:6px;font-size:10px;font-weight:400;color:#666}
+  .melt{background:linear-gradient(#fafafa 55%,repeating-linear-gradient(45deg,#e6e6e6 0 6px,#f7f7f7 6px 12px) 55%)}
+  .free{border-style:solid;background:#fff}
+  .big{font-size:13px;font-weight:600;margin:8px 0 2px}
+  .chip{display:inline-block;border:1px solid #888;border-radius:10px;font-size:10px;padding:1px 7px;margin-right:4px}
+  .btn{border:2px solid #333;border-radius:10px;text-align:center;padding:9px;font-size:13px;font-weight:600;margin-top:8px}
+  .btn.ghost{border:1px solid #999;font-weight:400}
+  .li{font-size:12px;display:flex;justify-content:space-between;border-bottom:1px dotted #bbb;padding:6px 0}
+  .nav{position:absolute;bottom:0;left:0;right:0;border-top:1.5px solid #999;display:flex;justify-content:space-around;font-size:10px;padding:9px 0;background:#fff}
+  .note{font-size:10px;color:#a33;margin-top:4px}
+  .ai{border:1.5px dashed #555;border-radius:10px;padding:8px;font-size:11px;background:#fbfbfb}
+  .step{font-size:11px;padding:4px 0}
+</style></head>
+<body>
+<h1>Unfreeze — rough wireframe (3 states). Ice block = the hero. Grey hatch = frozen.</h1>
+<div class="row">
+
+<!-- STATE 1: entry from push. Ice is FORMING (prevention). The amount and date are the first thing seen,
+     because the merchant's real question is "when do I lose access to my money", not "what is KYC". -->
+<div>
+<div class="phone">
+  <div class="top"><span>9:41</span><span>🔔 1</span></div>
+  <div class="hi">Hi Priya</div><div class="sub">Priya's Bakes · Pune</div>
+  <div class="card">
+    <div class="ice">₹48,200<small>frost creeping in from edges · grows daily</small></div>
+    <div class="big">Settlements freeze on 13 Feb</div>
+    <div style="font-size:11px;color:#666">Re-KYC pending · takes ~90 seconds</div>
+    <div style="margin-top:6px"><span class="chip">123 days left</span><span class="chip">3 steps</span></div>
+    <div class="btn">Stop the freeze</div>
+  </div>
+  <div class="card" style="font-size:11px">🧊 Risk review · <b>₹12,600 already on hold</b><br><span style="color:#666">+₹6,300 frozen today · show proof of delivery →</span></div>
+  <div class="card" style="font-size:11px">Today ₹18,450 · 23 payments<br><span style="color:#666">Next settlement: Tue 14 Oct</span></div>
+  <div class="nav"><span><b>Home</b></span><span>Payments</span><span>Settlements</span><span>Account</span></div>
+</div>
+<p class="cap"><b>1. Entry.</b> Local push "₹48,200 will freeze on 13 Feb. Fix in 90s" opens here, with no OTP wall. Ice <i>forms</i> as the countdown shrinks. The risk-hold card (already frozen, accruing) sits below as the teaser.</p>
+</div>
+
+<!-- STATE 2: inside the flow. AI explanation on top (real Claude call), checklist below.
+     Each completed step melts a slice of ice (haptic tick). DigiLocker before camera. -->
+<div>
+<div class="phone">
+  <div class="top"><span>← Stop the freeze</span><span>EN | हिं</span></div>
+  <div class="ice melt" style="margin-top:10px;height:90px">₹48,200<small>1 of 3 cleared · melting</small></div>
+  <div class="ai" style="margin-top:8px">✨ <b>Why this is happening</b><br>RBI asks every payment company to re-check its merchants. Yours is due. Nothing is wrong with your account. 2 more things and your money keeps flowing.</div>
+  <div class="card" style="margin-top:8px">
+    <div class="li"><span>✅ Confirm business details</span><span>prefilled</span></div>
+    <div class="li"><span>⬜ PAN & Aadhaar</span><span><b>DigiLocker →</b></span></div>
+    <div class="li"><span>⬜ Shop-front photo</span><span>📷</span></div>
+  </div>
+  <div class="card" style="font-size:11px">📷 Photo check (AI)<br><span style="color:#666">"Too dark — the shop name isn't readable. Try with the shutter open."</span> <span class="chip">Retake</span></div>
+  <div class="btn">Continue with DigiLocker</div>
+  <div class="note">States to design: DigiLocker down → fall back to photo; AI offline → canned copy.</div>
+</div>
+<p class="cap"><b>2. Flow.</b> AI explains <i>why</i> in plain English/Hindi (Claude call #1). DigiLocker consent fetches PAN/Aadhaar, so no physical card is needed. The camera is only for the shop photo, checked by Claude vision (call #2). Each tick melts the ice.</p>
+</div>
+
+<!-- STATE 3: submitted. Ice gone, replaced by an honest tracker. Lesson from Shopify threads:
+     the status must never contradict reality (no stale "paused" banner after approval). -->
+<div>
+<div class="phone">
+  <div class="top"><span>← Home</span><span></span></div>
+  <div class="ice free" style="margin-top:10px;height:90px">₹48,200 ✓<small>keeps settling on schedule</small></div>
+  <div class="big">Freeze stopped</div>
+  <div style="font-size:11px;color:#666">Submitted 11:42 · ref RK-20412</div>
+  <div class="card" style="margin-top:8px">
+    <div class="step">● Submitted — 11:42 today</div>
+    <div class="step">○ Under review — usually within 24 h</div>
+    <div class="step">○ Verified — you'll get a push</div>
+  </div>
+  <div class="card" style="font-size:11px">Physical visit needed? <b>Book a 30-min slot</b> (RBI asks PAs to verify in person)</div>
+  <div class="btn ghost">Share confirmation on WhatsApp</div>
+  <div class="btn ghost">Talk to a person (case pre-filled)</div>
+  <div class="nav"><span><b>Home</b></span><span>Payments</span><span>Settlements</span><span>Account</span></div>
+</div>
+<p class="cap"><b>3. Done (&lt;2 min).</b> The task ends at "submitted + what happens next". The tracker shows the real status. The human-callback button answers the #1 complaint without building chat.</p>
+</div>
+
+</div>
+</body></html>

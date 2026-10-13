@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickUnfreeze · intro</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+/* === FIXED STAGE BASE (viewport-base.css) === */
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+/* === THEME: product stage (deep navy, cobalt, R.A.Y. mint) === */
+:root { --stage-bg:#050915; --slide-bg:#070C1C; --text:#FFFFFF; --soft:rgba(255,255,255,.72); --faint:rgba(255,255,255,.42);
+        --blue:#3395FF; --blue-d:#1F5AF0; --mint:#4FC48A; --teal:#0F3D3A; --amber:#F2A93B;
+        --display:'Clash Display',sans-serif; --body:'Satoshi',sans-serif; }
+.slide { font-family:var(--body); color:var(--text);
+  background: radial-gradient(1100px 800px at 72% 42%, #16306A 0%, rgba(22,48,106,0) 70%),
+              radial-gradient(700px 500px at 10% 100%, rgba(31,90,240,.25), rgba(0,0,0,0) 70%), var(--slide-bg); }
+.brand { position:absolute; left:130px; top:96px; display:flex; align-items:center; gap:20px; }
+.logo { width:64px; height:64px; }
+.brand b { font-family:var(--display); font-weight:600; font-size:42px; letter-spacing:-.5px; }
+.brand span { font-size:24px; color:var(--faint); }
+.copy { position:absolute; left:130px; top:250px; width:960px; height:640px; }
+.beat { position:absolute; inset:0; opacity:0; transform:translateY(40px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+.slide[data-beat="1"] .b1, .slide[data-beat="2"] .b2, .slide[data-beat="3"] .b3 { opacity:1; transform:none; }
+.label { font-size:24px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--blue); }
+.beat h2 { font-family:var(--display); font-weight:600; font-size:104px; line-height:1.0; letter-spacing:-2.5px; margin-top:30px; }
+.beat h2 em { font-style:normal; color:var(--blue); }
+.beat p { font-size:34px; line-height:1.45; color:var(--soft); margin-top:36px; max-width:880px; }
+.beat p b { color:#fff; }
+.dots { position:absolute; left:130px; bottom:110px; display:flex; gap:14px; align-items:center; font-size:22px; color:var(--faint); letter-spacing:2px; text-transform:uppercase; }
+.dots i { width:46px; height:6px; border-radius:4px; background:rgba(255,255,255,.18); transition: background .5s, width .5s; }
+.slide[data-beat="1"] .d1, .slide[data-beat="2"] .d2, .slide[data-beat="3"] .d3 { background:var(--blue); width:90px; }
+.byline { position:absolute; right:56px; bottom:40px; font-size:17px; letter-spacing:.3px; color:rgba(255,255,255,.38); }
+/* --- phone --- */
+.phone { position:absolute; right:190px; top:140px; width:420px; height:820px; border-radius:62px; background:#15181E; border:2px solid #343844;
+         box-shadow: 0 60px 120px rgba(0,0,0,.55), 0 0 0 10px rgba(255,255,255,.03); padding:14px; }
+.screen { width:100%; height:100%; border-radius:50px; background:#fff; overflow:hidden; position:relative; color:#0D1B3E; font-family:var(--body); }
+.island { position:absolute; left:50%; top:12px; transform:translateX(-50%); width:120px; height:34px; border-radius:20px; background:#000; z-index:3; }
+.state { position:absolute; inset:64px 22px 22px; opacity:0; transform:scale(.97); transition: opacity .8s, transform .8s cubic-bezier(.16,1,.3,1); }
+.slide[data-beat="1"] .s1, .slide[data-beat="2"] .s2, .slide[data-beat="3"] .s3 { opacity:1; transform:none; }
+.pill { display:inline-block; font-size:15px; font-weight:800; letter-spacing:1px; padding:6px 12px; border-radius:20px; }
+.warn { background:#FFF2DF; color:#C46A00; }
+.card { border:1.5px solid #E3E8F2; border-radius:20px; padding:20px; margin-top:14px; }
+.card h4 { font-size:22px; line-height:1.25; }
+.card .sub { font-size:16px; color:#6B7690; margin-top:6px; line-height:1.35; }
+.ice { margin:18px auto 0; height:150px; border-radius:22px; display:grid; place-items:center; text-align:center;
+       background: linear-gradient(135deg,#EEF9FF,#B7E2F8); border:1.5px solid #A8D8F2; color:#2D5F86; transition: all .8s; }
+.ice .amt { font-family:var(--display); font-weight:600; font-size:46px; color:#1E4E74; }
+.ice small { font-size:15px; }
+.btn { margin-top:18px; background:#1F5AF0; color:#fff; border-radius:30px; text-align:center; padding:14px; font-weight:800; font-size:18px; }
+.ray { display:inline-flex; align-items:center; gap:6px; background:var(--teal); color:#fff; font-size:15px; font-weight:800; padding:6px 12px; border-radius:20px; }
+.ray i { color:var(--mint); font-style:normal; }
+.q { margin-top:16px; font-size:19px; color:#6B7690; font-style:italic; }
+.a { margin-top:12px; background:#E9F7EF; border-radius:18px; padding:16px; font-size:19px; line-height:1.45; color:#123F35; }
+.mic { margin-top:16px; background:#EEF3FF; border-radius:16px; padding:15px; text-align:center; font-weight:800; font-size:17px; color:#0D1B3E;
+       animation: pulse 1.8s ease-out 3; }
+@keyframes pulse { from { box-shadow:0 0 0 0 rgba(51,149,255,.45); } to { box-shadow:0 0 0 16px rgba(51,149,255,0); } }
+.done { margin-top:18px; height:150px; border-radius:22px; background:#E7F7EF; border:1.5px solid #BFE8D6; display:grid; place-items:center; text-align:center; color:#0E8A5F; }
+.done b { font-family:var(--display); font-size:40px; }
+.list { margin-top:18px; } .lh { font-size:15px; font-weight:800; color:#6B7690; letter-spacing:.5px; margin-bottom:6px; }
+.li { display:flex; justify-content:space-between; font-size:17px; padding:11px 2px; border-bottom:1px solid #EEF1F6; } .li b { color:#0D1B3E; }
+.langs { display:flex; gap:8px; align-items:center; } .lc { font-size:15px; padding:5px 11px; border-radius:14px; border:1.5px solid #DDE3EE; color:#45506A; }
+.lc.on { background:#E6ECFF; border-color:#E6ECFF; color:#0D1B3E; font-weight:800; }
+.ask { margin-top:16px; font-size:22px; font-weight:800; color:#0D1B3E; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; } .chips span { font-size:15px; border:1.5px solid #DDE3EE; border-radius:12px; padding:7px 10px; color:#2B3550; }
+.track { margin-top:18px; border:1.5px solid #E3E8F2; border-radius:18px; padding:14px 16px; }
+.t { display:flex; gap:12px; align-items:center; font-size:16px; padding:8px 0; color:#6B7690; } .t b { color:#0D1B3E; }
+.t i { width:14px; height:14px; border-radius:50%; background:#DDE3EE; flex:none; } .t.on i { background:#0E8A5F; }
+.who { display:flex; gap:14px; align-items:center; }
+.av { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#FFB86B,#F07A3B); }
+
+
+/* --- slide 2 extras --- */
+.thumbs { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+.thumbs i { height:96px; border-radius:14px; display:block; }
+.thumbs .t1 { background:linear-gradient(135deg,#F7D7B5,#E9A46B); }
+.thumbs .t2 { background:linear-gradient(135deg,#DDE9F7,#9DB9DE); }
+.thumbs .t3 { background:linear-gradient(135deg,#E3F3E5,#9ED3A8); }
+</style></head>
+<body><div class="deck-viewport"><main class="deck-stage" id="deckStage">
+<section class="slide active" data-beat="0" data-beats="3" data-times="0,14000,25000">
+<div class="brand"><svg viewBox="0 0 512 512" class="logo"><rect width="512" height="512" rx="112" fill="#072654"/><g transform="translate(256 256) scale(1.12) translate(-274 -251)"><polygon points="168,132 372,132 404,92 200,92" fill="#9CCBFF"/><polygon points="372,132 404,92 380,300 348,340" fill="#1F5AF0"/><polygon points="168,132 372,132 348,340 144,340" fill="#3395FF"/><text x="262" y="292" font-family="Arial" font-size="168" font-weight="700" fill="#fff" text-anchor="middle" transform="skewX(-7) translate(28 0)">₹</text><path d="M246 362 C246 362 222 394 222 410 a24 24 0 0 0 48 0 C270 394 246 362 246 362 Z" fill="#9CCBFF"/></g></svg><b>QuickUnfreeze</b><span>for Razorpay</span></div>
+<div class="copy">
+  <div class="beat b1"><div class="label">The opportunity</div>
+    <h2>Holds happen.<br><em>Fix them fast.</em></h2>
+    <p>"Money stopped, no reason" is the <b>loudest complaint</b> in Razorpay's Play Store reviews, and today the fix lives on a laptop. With re-KYC holds starting <b>early next year</b>, there's a chance to get ahead of it.</p></div>
+  <div class="beat b2"><div class="label">The merchant</div>
+    <h2>Meet <em>Bharti.</em></h2>
+    <p>A baker in <b>Nagpur</b> who runs her business from her phone, in <b>Hindi and Marathi</b>. Her re-KYC is due, and her settlements are her working capital.</p></div>
+  <div class="beat b3"><div class="label">The solution</div>
+    <h2>Warn early.<br>Explain <em>clearly.</em><br>Done in 90 s.</h2>
+    <p>Inside the Razorpay app: a heads-up months ahead, <b>R.A.Y.</b> answers in her own language, and the hold clears on the phone in <b>~90 seconds</b>.</p></div>
+</div>
+<div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+<div class="byline">Concept by Amit Mishra</div>
+<div class="phone"><div class="screen"><div class="island"></div>
+  <div class="state s1"><span class="pill warn">ACTION NEEDED</span>
+    <div class="card"><h4>Settlements on hold from 13 Feb</h4><div class="sub">Your re-KYC is due.</div>
+      <div class="ice"><div><div class="amt">₹88,250</div><small>a week of settlements would be held</small></div></div>
+      <div class="btn">Complete re-KYC</div></div>
+    <div class="list"><div class="lh">Today · 23 payments</div>
+      <div class="li"><span>Anjali M. · UPI</span><b>₹1,450</b></div>
+      <div class="li"><span>Order #2291 · Link</span><b>₹2,600</b></div>
+      <div class="li"><span>Rohit K. · Card</span><b>₹3,200</b></div></div></div>
+  <div class="state s2"><div class="who"><div class="av"></div><div><h4 style="font-size:24px">Bharti</h4><div class="sub" style="font-size:16px;color:#6B7690">Bharti's Bakes · Nagpur</div></div></div>
+    <div class="card"><div class="sub" style="margin:0">Collected this month</div><h4 style="font-size:34px;margin-top:4px">₹3.6 lakh</h4>
+      <div class="sub">Payment Links · UPI QR · 23 payments today</div></div>
+    <div class="list"><div class="lh">About her business</div>
+      <div class="li"><span>Runs it from</span><b>One phone</b></div>
+      <div class="li"><span>Prefers</span><b>हिंदी · मराठी</b></div>
+      <div class="li"><span>Settlements are</span><b>Working capital</b></div>
+      <div class="li"><span>Re-KYC</span><b style="color:#C46A00">Due</b></div></div></div>
+  <div class="state s3"><div class="langs"><span class="ray"><i>✦</i>R.A.Y.</span><span class="lc on">हिं</span><span class="lc">मराठी</span><span class="lc">EN</span></div>
+    <div class="ask">अपनी भाषा में पूछें</div>
+    <div class="chips"><span>मेरा पैसा क्यों रुकेगा?</span><span>कौन से डॉक्यूमेंट चाहिए?</span></div>
+    <div class="q">"मेरा पैसा क्यों रुकेगा?"</div>
+    <div class="a">RBI के नियम से re-KYC ज़रूरी है। 13 फरवरी से पहले पूरा करें, आपका पैसा चलता रहेगा।</div>
+    <div class="mic">🎙 दबाकर रखें और हिंदी में पूछें</div></div>
+</div></div>
+</section>
+
+<!-- === SLIDE 2: second use case, a risk hold that has already happened === -->
+<section class="slide" data-beat="0" data-beats="2" data-times="">
+<div class="brand"><svg viewBox="0 0 512 512" class="logo"><rect width="512" height="512" rx="112" fill="#072654"/><g transform="translate(256 256) scale(1.12) translate(-274 -251)"><polygon points="168,132 372,132 404,92 200,92" fill="#9CCBFF"/><polygon points="372,132 404,92 380,300 348,340" fill="#1F5AF0"/><polygon points="168,132 372,132 348,340 144,340" fill="#3395FF"/><text x="262" y="292" font-family="Arial" font-size="168" font-weight="700" fill="#fff" text-anchor="middle" transform="skewX(-7) translate(28 0)">₹</text><path d="M246 362 C246 362 222 394 222 410 a24 24 0 0 0 48 0 C270 394 246 362 246 362 Z" fill="#9CCBFF"/></g></svg><b>QuickUnfreeze</b><span>for Razorpay</span></div>
+<div class="copy">
+  <div class="beat b1"><div class="label">Use case 2 · Risk review</div>
+    <h2>Already on hold?<br>R.A.Y. <em>explains.</em></h2>
+    <p>Two of Bharti's orders were larger than usual, so <b>₹12,600</b> is held for a routine check. R.A.Y. tells her why in <b>Hindi or Marathi</b>, and her other payments keep settling.</p></div>
+  <div class="beat b2"><div class="label">Use case 2 · Risk review</div>
+    <h2>Proof from<br>the <em>gallery.</em></h2>
+    <p>She adds delivery photos or chat screenshots she already has. A reviewer usually checks within <b>24 hours</b>, and she can track it in the app.</p></div>
+</div>
+<div class="dots"><i class="d1"></i><i class="d2"></i></div>
+<div class="byline">Concept by Amit Mishra</div>
+<div class="phone"><div class="screen"><div class="island"></div>
+  <div class="state s1"><span class="pill warn">SETTLEMENT ON HOLD</span>
+    <div class="ice"><div><div class="amt">₹12,600</div><small>2 orders held for a routine check</small></div></div>
+    <div class="langs" style="margin-top:16px"><span class="ray"><i>✦</i>R.A.Y.</span><span class="lc on">हिं</span><span class="lc">मराठी</span><span class="lc">EN</span></div>
+    <div class="q">"मेरा पैसा होल्ड पर क्यों है?"</div>
+    <div class="a">आपके दो ऑर्डर आम ऑर्डर से बड़े थे, इसलिए रूटीन जाँच हो रही है। बाकी पेमेंट सेटल हो रहे हैं।</div>
+    <div class="list"><div class="li"><span>Order #2271 · Wedding cake</span><b>₹7,400</b></div>
+      <div class="li"><span>Order #2276 · Hamper</span><b>₹5,200</b></div></div></div>
+  <div class="state s2"><div class="ask">Add proof of delivery</div>
+    <div class="thumbs"><i class="t1"></i><i class="t2"></i><i class="t3"></i></div>
+    <div class="done"><div><b>Proof sent ✓</b><div style="font-size:16px;margin-top:6px">New payments keep settling</div></div></div>
+    <div class="track"><div class="t on"><i></i><span><b>Proof submitted</b> · today</span></div><div class="t"><i></i><span><b>Under review</b> · usually 24 h</span></div><div class="t"><i></i><span><b>₹12,600 released</b></span></div></div></div>
+</div></div>
+</section></main></div>
+<script>
+/* === STAGE SCALE + SLIDE/BEAT CONTROLLER ===
+   Manual only: nothing advances on its own.
+   → / space / click: next beat, then next slide. ←: back. R: back to the start.
+   URL: ?slide=2&beat=1 jumps straight to a beat for setting up a shot. */
+(() => {
+  const stage = document.getElementById('deckStage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const fit = () => {
+    const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+  };
+  addEventListener('resize', fit); fit();
+  let cur = 0, beat = 1, timers = [];
+  const stop = () => { timers.forEach(clearTimeout); timers = []; };
+  const show = (si, b) => {
+    cur = si; beat = b;
+    slides.forEach((s, k) => {
+      const on = k === si;
+      s.classList.toggle('active', on); s.classList.toggle('visible', on);
+      s.dataset.beat = on ? b : 0;
+    });
+  };
+  const beats = (si) => +slides[si].dataset.beats;
+  const next = () => beat < beats(cur) ? show(cur, beat + 1) : cur < slides.length - 1 ? show(cur + 1, 1) : null;
+  const prev = () => beat > 1 ? show(cur, beat - 1) : cur > 0 ? show(cur - 1, beats(cur - 1)) : null;
+  const run = () => { stop(); show(0, 1); };
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { stop(); next(); }
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) { stop(); prev(); }
+    if (e.key.toLowerCase() === 'r') run();
+  });
+  addEventListener('click', () => { stop(); next(); });
+  const p = new URLSearchParams(location.search);
+  if (p.get('slide') || p.get('beat')) { requestAnimationFrame(() => show((+p.get('slide') || 1) - 1, +p.get('beat') || 1)); }
+  else requestAnimationFrame(run);
+})();
+</script>
+</body></html>

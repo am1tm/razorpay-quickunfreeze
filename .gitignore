@@ -1,0 +1,31 @@
+# Media and documents kept out of the repo (large or private)
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.pdf
+*.apk
+
+# Not for publishing yet / not ours to publish
+docs/submission/ai-build-log.md
+razorpay.png
+INSTRUCTIONS.md
+
+# Secrets and local config
+.env
+.env.*
+.vercel/
+**/android/local.properties
+
+# Tool state and OS noise
+.gstack/
+.frontend-slides/
+.DS_Store
+.idea/
+*.iml
+*.log
+
+# Build output (Flutter app keeps its own .gitignore too)
+unfreeze/build/
+unfreeze/.dart_tool/
+node_modules/

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Unfreeze mark: a slanted ice cube (Razorpay's blue/navy palette and forward slant) with a ₹ inside,
+       melting into a single drop. Original artwork, not the Razorpay logo. -->
+  <rect width="512" height="512" rx="112" fill="#072654"/>
+  <!-- top face -->
+  <polygon points="168,132 372,132 404,92 200,92" fill="#9CCBFF"/>
+  <!-- right face -->
+  <polygon points="372,132 404,92 380,300 348,340" fill="#1F5AF0"/>
+  <!-- front face -->
+  <polygon points="168,132 372,132 348,340 144,340" fill="#3395FF"/>
+  <!-- shine -->
+  <polygon points="186,150 214,150 196,300 168,300" fill="#FFFFFF" opacity=".28"/>
+  <!-- rupee -->
+  <text x="262" y="292" font-family="Inter, Helvetica, Arial, sans-serif" font-size="168" font-weight="700"
+        fill="#FFFFFF" text-anchor="middle" transform="skewX(-7) translate(28 0)">₹</text>
+  <!-- melt drop -->
+  <path d="M246 362 C246 362 222 394 222 410 a24 24 0 0 0 48 0 C270 394 246 362 246 362 Z" fill="#9CCBFF"/>
+</svg>

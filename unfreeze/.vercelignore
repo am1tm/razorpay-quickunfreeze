@@ -1,0 +1,12 @@
+android/
+ios/
+lib/
+test/
+api_test/
+.dart_tool/
+.idea/
+build/app/
+build/*.cache*
+*.iml
+.env*
+scripts/
