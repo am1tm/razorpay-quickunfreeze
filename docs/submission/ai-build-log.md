@@ -185,7 +185,7 @@
 ### 5c. Prototype limitations
 
 - **No merchant interviews yet.** What I know about merchants comes from public reviews and posts. The "today" journey for a re-KYC hold is inferred, because the wave hasn't hit yet.
-- **Three languages, on purpose:** I limited the prototype to Hindi, Marathi and English. Sarvam's speech models cover 11 Indian languages, which is the set the end card shows, and adding one is a small change to the language list and its fallback clips.
+- **Three languages, on purpose:** I limited the prototype to Hindi, Marathi and English. Sarvam's speech models cover 11 Indian languages, which can be extended easily but for purposes of demo, I intentionally limited to 3 languages.
 - **Mocked parts:** DigiLocker, the KYC review, visit booking and the status tracker, which never advances to "Verified".
 - **The hold date (13 Feb 2027) is derived:** one news report gives the 15 Mar 2027 deadline, and Razorpay's 30-day rule is assumed to carry over. Another report says Dec 2026.
 - **Policy dependency:** the experience works best if Razorpay treats a *submitted* re-KYC as compliant for hold purposes (brief assumption A4). The app says *"Review usually done well before 13 Feb"* and doesn't promise no hold.
