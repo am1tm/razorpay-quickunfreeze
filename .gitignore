@@ -7,7 +7,6 @@
 *.apk
 
 # Not for publishing yet / not ours to publish
-docs/submission/ai-build-log.md
 razorpay.png
 INSTRUCTIONS.md
 
